@@ -79,8 +79,11 @@ async def _reload(arg):
     else:
         await bot.say('Reloaded module ' + arg)
 
+# Work on this
 def isOwner(ctx):
     return ctx.message.author.id == '171319044715053057'
-    # Work on this
 
-bot.run('Token')
+if __name__ == '__main__':
+    with open('token.txt', 'r') as oauth_token_file:
+        oauth_token = oauth_token_file.readline().strip()
+    client.run(oauth_token)
