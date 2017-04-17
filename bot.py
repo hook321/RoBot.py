@@ -22,7 +22,6 @@ async def on_ready():
     print("{} channels".format(channels))
     print("{} users".format(users))
     print('-------------')
-    await bot.change_presence(game=discord.Game(name='FIRST Steamworks 2017'))
 
 @bot.event
 async def on_message(msg):
@@ -64,20 +63,22 @@ async def e(ctx):
 # Work on this
 @bot.command()
 async def ping():
-    datetime = datetime.now()
     await bot.say('Pong!')
 
 @bot.command(name='reload', hidden=True)
 async def _reload(arg):
-    c = "cogs."
-    try:
-        bot.unload_extension(c + arg)
-        bot.load_extension(c + arg)
-    except Exception as e:
-        await bot.say('\N{PISTOL}')
-        await bot.say('{}: {}'.format(type(e).__name__, e))
-    else:
-        await bot.say('Reloaded module ' + arg)
+	if isOwner(ctx):
+		c = "cogs."
+		try:
+			bot.unload_extension(c + arg)
+			bot.load_extension(c + arg)
+		except Exception as e:
+			await bot.say('\n{PISTOL}')
+			await bot.say('{}: {}'.format(type(e).__name__, e))
+		else:
+			await bot.say('Reloaded module ' + arg)
+	else:
+		await bot.send_message(ctx.message.channel, "You do not have permission to use this command!")
 
 # Work on this
 def isOwner(ctx):
@@ -86,4 +87,4 @@ def isOwner(ctx):
 if __name__ == '__main__':
     with open('token.txt', 'r') as oauth_token_file:
         oauth_token = oauth_token_file.readline().strip()
-    client.run(oauth_token)
+    bot.run(oauth_token)
