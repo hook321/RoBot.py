@@ -8,7 +8,7 @@ t = datetime.datetime.now()
 
 @bot.event
 async def on_ready():
-    bot.load_extension("cogs.Utils")
+    bot.load_extension("cogs.utils")
     print('Cogs Loaded.')
     users = len(set(bot.get_all_members()))
     servers = len(bot.servers)
