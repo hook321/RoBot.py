@@ -1,7 +1,7 @@
 import discord, asyncio, datetime, requests
 from discord.ext.commands import Bot
 from discord.ext import commands
-prefix = "%";
+prefix = "%"
 bot = Bot(command_prefix=prefix, description="The FRC Discord Bot, now with 100% more snakes!")
 
 t = datetime.datetime.now()
@@ -26,7 +26,7 @@ async def on_ready():
 
 @bot.event
 async def on_message(msg):
-    content = msg.content;
+    content = msg.content
     await bot.process_commands(msg)
 
 @bot.command(hidden=True, pass_context=True)
