@@ -1,4 +1,4 @@
-import discord, aiohttp, bs4, lxml
+import discord, aiohttp, bs4
 from bs4 import BeautifulSoup
 from discord.ext import commands
 
