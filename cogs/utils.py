@@ -8,7 +8,7 @@ class utils:
 
     @commands.command(pass_context=True)
     async def isup(self, ctx):
-        temp = ctx.message.content.split(' ', 1)
+        temp = ctx.message.content.split(" ", 1)
         if len(temp) == 1:
             await self.bot.say("I'm sorry, but you need to give me a site to check.")
         else:
@@ -16,11 +16,11 @@ class utils:
             if not site:
                 await self.bot.say("I'm sorry, but you need to give me a site to check.")
 
-            if '://' in site:
-                site = site.split('://')[1]
-            if not '.' in site:
+            if "://" in site:
+                site = site.split("://")[1]
+            if not "." in site:
                 site += ".com"
-            actualsite = site
+            actual_site = site
             try:
                 site = "http://isup.me/" + site
                 with aiohttp.ClientSession() as session:
@@ -29,9 +29,9 @@ class utils:
                     soup = BeautifulSoup(data, "lxml")
                 status = soup.find("div", {"id": "container"}).get_text()
                 if "It's just you." in status:
-                    await self.bot.say("It's just you. " + actualsite + " is up for me.")
+                    await self.bot.say("It's just you. " + actual_site + " is up for me.")
                 else:
-                    await self.bot.say("Nope. " + actualsite + " is down for me.")
+                    await self.bot.say("Nope. " + actual_site + " is down for me.")
             except Exception as e:
                 await self.bot.say("Hmm, something went wrong. Feel free to try again.")
                 print(e)
