@@ -68,15 +68,18 @@ async def ping():
 
 @bot.command(name="reload", hidden=True)
 async def _reload(arg):
-    c = "cogs."
-    try:
-        bot.unload_extension(c + arg)
-        bot.load_extension(c + arg)
-    except Exception as e:
-        await bot.say("\N{PISTOL}")
-        await bot.say("{}: {}".format(type(e).__name__, e))
-    else:
-        await bot.say("Reloaded module " + arg)
+	if is_owner(ctx):
+		c = "cogs."
+		try:
+			bot.unload_extension(c + arg)
+			bot.load_extension(c + arg)
+		except Exception as e:
+			await bot.say('\n{PISTOL}')
+			await bot.say('{}: {}'.format(type(e).__name__, e))
+		else:
+			await bot.say('Reloaded module ' + arg)
+	else:
+		await bot.send_message(ctx.message.channel, "You do not have permission to use this command!")
 
 def is_owner(ctx):
     return ctx.message.author.id == bot_owner
@@ -86,4 +89,7 @@ with open("auth.txt", "r") as auth_file:
 	bot_owner = auth_file.readline().strip()
 
 if __name__ == "__main__":
+    with open('token.txt', 'r') as auth_file:
+        oauth_token = auth_file.readline().strip()
+		bot_owner = auth_file.readline().strip()
     bot.run(oauth_token)
